@@ -1,16 +1,16 @@
-PerforceConnector
+### PerforceConnector
 =================
 
-### License
+##### License
 
 Copyright (c) Rally Software Development Corp. 2013
 Distributed under the MIT License.
 
-### Warranty
+##### Warranty
 
 Perforce Connector is available on an as-is basis. Rally Software does not provide any support for this connector.
 
-### Introduction
+##### Introduction
 
 The Rally Connector for Perforce inspects the contents of a check-in comment and creates a changeset in Rally associated to the Rally artifact, creates changes for each affected file, and optionally updates the state of the Rally artifact. For example, if a developer checks in two files with the commit message "Fixed DE17", the Perforce Connector would create a changeset for the check-in revision, create two change objects for the affected files, link the changeset to the defect, and set the state of defect 17 as fixed.
 
@@ -18,7 +18,7 @@ The diagram below shows the objects that are created/modified when a check-in oc
 
 ![alt text](https://prod.help.rallydev.com/sites/default/files/multimedia/SCMDiagram.png "SCM")
 
-### Features
+##### Features
 
 The connector can link to and modify tasks, defects and user stories contained in Rally. To change the state of a Rally artifact enter the ID for the story followed by the state you wish to change in your commit message.
 Example: "Extremely important fetching feature done. US123 Completed"
@@ -39,7 +39,7 @@ changes
 
 The connector automatically sets the ToDo value of a task to 0 if the commit message contains a task ID and a state of completed.
 
-### Software and hardware requirements
+##### Software and hardware requirements
 
 The following are the hardware and software requirements to install and run the Rally Connector for Perforce.
 
@@ -49,9 +49,9 @@ The following are the hardware and software requirements to install and run the 
 4. The Ruby gem "rally_api".
 5. This connector has been tested on Perforce 2009.1 only.
 
-### Installation
+##### Installation
 
-#### Basic installation steps
+###### Basic installation steps
 
 1. Install Ruby & the Rally Connector for Perforce code.
 2. Setup the config.xml for Perforce.
@@ -71,7 +71,7 @@ You may need to restart your system in order for the change to take effect.
 
 Note on upgrade process: If you are using a pre-2.0 version of the connector and wish to upgrade to 2.0, backup your config.xml file and then follow the installation instructions outlined below. If you plan to use your old config.xml file once you extract the contents of the new zip, add an `<SCMRepositoryName>` element to your config.xml and set it to the name of the SCMRepository you wish to create in Rally. The `<SCMRepositoryName>` element is a required. Additionally, you will need to download the `rally_api` gem by typing the command "gem install rally_api" from the command line. Optionally, to map authors to Rally changesets, add a `<UserDomain>` element to your config.xml file and set it to the email domain for your company (something like mydomain.com).
 
-### Install Ruby and the Rally Connector to Perforce
+##### Install Ruby and the Rally Connector to Perforce
 
 1. Install the Ruby programming language. Make sure the user running your Perforce server is given access to the Ruby installation.
 2. Install the 3 required Ruby Gems: builder, rally_api and httpclient by entering the following from a command window (answer yes to any questions about installing required dependencies):
@@ -79,7 +79,7 @@ Note on upgrade process: If you are using a pre-2.0 version of the connector and
 3. If you are using a proxy, add -p http://proxyhost:portnumber to the command line.
 4. Save the RallyConnectorForP4-x-x.zip file locally (on your machine) into the directory where you want to install the connector. Navigate to this install directory and extract the RallyConnectorForP4-x.x.zip file you just saved.
 
-### Setup the configuration file
+##### Setup the configuration file
 
 Edit and save the config.xml file, entering the appropriate values between each begin and end tag.
 
@@ -161,7 +161,7 @@ The `<CachedStates>` content in the config.xml file can remain untouched unless 
 </CachedStates>
 ```
 
-### Test the configuration file
+##### Test the configuration file
 
 To test the config.xml file for completeness, issue this command: `ruby config_test.rb`
 
@@ -172,11 +172,11 @@ The above script will test the network settings and the connection information i
 4. Rally Workspace found
 5. Email Validation Passed
 
-### Setup Perforce trigger
+##### Setup Perforce trigger
 
 The Perforce change-commit trigger is set up so the Rally connector process runs in the background for optimal performance. After the developer checks in code, the Rally connector immediately runs and updates the appropriate objects in Rally without the developer having to wait for the Rally web services requests to complete. Consequently, check the Rally log file for any errors.
 
-#### Setting up the change-commit trigger on Unix:
+###### Setting up the change-commit trigger on Unix:
 
 The steps below assume all files are saved in the /opt/integrations directory. Your file paths may vary depending on your installation.
 
@@ -191,7 +191,7 @@ The steps below assume all files are saved in the /opt/integrations directory. Y
  * `rally  change-commit //...  "/opt/integrations/P4ToRally/RallyWrapper.sh  %changelist%  %user%"`
 4. Save the p4 triggers file. The connector is now installed.
 
-#### Setting up the change-commit trigger on Windows:
+###### Setting up the change-commit trigger on Windows:
 
 1. Create a VBScript (RunP4ToRally.vbs) which contains commands to run the connector in the background.
  * `Set WshShell = WScript.CreateObject("WScript.Shell")`
@@ -205,7 +205,7 @@ The steps below assume all files are saved in the /opt/integrations directory. Y
  * `rally  change-commit  //depot/...  "C:\P4ToRally\RallyWrapper.bat  %changelist%  %user%"`
 6. Save the p4 triggers file. The connector is now installed.
 
-### Tips
+##### Tips
 
 Why are changesets not displaying in Rally?
  * Verify your Workspace administrator has selected the Enable Build and Changeset option on the Edit Workspace configuration pop-up and verify there are no unexpected messages in the Rally_Connector_Error.log file. No errors are written to the console.
@@ -229,7 +229,7 @@ Log level 0 will produce the maximum amount of output, with log level 5 producin
  * FATAL   = 4
  * UNKNOWN = 5
 
-#### Under the hood of the Perforce connector
+###### Under the hood of the Perforce connector
 
 Here are some notes about the internal workings of Rally's Perforce connector.
 
@@ -237,7 +237,7 @@ The PERFORCE source control system (SCM) allows developers to perform "checkins"
 
 Most of the internal workings of the connector is done via five files as outlined below. Typically all these files are installed into some working directory where the user will be managing the connector. This should not be in the Perforce install directory, but rather in a working directory of the user. Please note there are special considerations to take into account if the pathname to this directory contains spaces. See WARNING(s) below for an example.
 
-##### The "Triggers:" file:
+####### The "Triggers:" file:
 A temporary "Triggers:" file, with a name like t2566t86.tmp, maintained by Perforce, which will invoke the batch file RallyWrapper.bat (described next). This "Triggers:" file can be edited from an MS-DOS command window by entering the command: `p4 triggers`
 
 The above command will open a notepad window to the TMP file named something like t2566t86.tmp and the last three lines should look something like this:
@@ -249,7 +249,7 @@ depot/... "C:\Docume~1\Administrator\JPKoleP4\RallyWrapper.bat %changelist% %use
 
 WARNING: Note that we did not use the text string "Documents and Settings" in the path name above as the embedded spaces cause parsing issues. Instead we used the "DOS 8.3 filename format" (http://en.wikipedia.org/wiki/8.3_filename).
 
-##### The "RallyWrapper.bat" file:
+####### The "RallyWrapper.bat" file:
 
 This BAT file is invoked by the Perforce system when the user performs a checkin (because it is called out in the "Triggers:" file mentioned in the previous step). It will invoke a Visual Basic Script named RunP4ToRally.vbs, with 2 arguments: the first is the commit ID and the second is the Rally user name. Typically this BAT files contains the following line:
 `C:\Docume~1\Administrator\JPKoleP4\RunP4ToRally.vbs %1 %2`
@@ -258,7 +258,7 @@ WARNING: Note that we did not use the text string "Documents and Settings" in th
 ￼
 `C:\Ruby19\bin\ruby.exe C:\Docume~1\Administrator\JPKoleP4\p4torally.rb %1 %2`
 
-##### The "RunP4ToRally.vbs" file:
+####### The "RunP4ToRally.vbs" file:
 
 The VBS file which actually invokes Rally's Ruby script called p4torally.rb in the background (which is why we use the VBS system). This script (mentioned in the previous file) contains three lines as follows:
 ```
@@ -272,10 +272,10 @@ Note: If you wish to place comments in this script, the VBS comment character is
 ' This is also
 ```
 
-##### The "p4torally.rb" file:
+####### The "p4torally.rb" file:
 
 This is the Rally-to-Perforce connector code written in Ruby which communicates with Rally and creates changesets. This is basically the post-commit script invoked by RunP4ToRally.vbs mentioned in the previous file.
 
-##### The "config.xml" file:
+####### The "config.xml" file:
 
 The XML configuration file which is read by the p4torally.rb Ruby code mentioned in the previous file. This file contains all the details needed to communicate with both the Perforce and Rally systems.
