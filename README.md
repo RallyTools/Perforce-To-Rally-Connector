@@ -43,17 +43,18 @@ The connector automatically sets the ToDo value of a task to 0 if the commit mes
 
 The following are the hardware and software requirements to install and run the Rally Connector for Perforce.
 
-1. A Rally subscription. Most build and changeset data will not show in Rally until a workspace administrator enables the build and changeset flag by editing the workspace.
-2. Access to your Perforce server.
-3. The Ruby programming language and Ruby gems (libraries) installed.
-4. The Ruby gem "rally_api".
-5. This connector has been tested on Perforce 2009.1 only.
+1. A Rally subscription.
+2. Most build and changeset data will not show in Rally until a workspace administrator enables the build and changeset flag by editing the workspace.
+3. Access to your Perforce server.
+4. Ruby (version 1.9.2 or greater) and Ruby GEMs (libraries) installed.
+5. The Ruby GEM "rally_api".
+6. This connector has been tested on Perforce 2009.1 only.
 
 ##### Installation
 
 ###### Basic installation steps
 
-1. Install Ruby & the Rally Connector for Perforce code.
+1. Install Ruby (version 1.9.2 or greater) and the Rally Connector for Perforce code.
 2. Setup the config.xml for Perforce.
 3. Run the config_test.rb to validate the config file is setup correctly.
 4. Setup p4torally.rb to be executed by the Perforce trigger.
@@ -73,8 +74,8 @@ Note on upgrade process: If you are using a pre-2.0 version of the connector and
 
 ##### Install Ruby and the Rally Connector to Perforce
 
-1. Install the Ruby programming language. Make sure the user running your Perforce server is given access to the Ruby installation.
-2. Install the 3 required Ruby Gems: builder, rally_api and httpclient by entering the following from a command window (answer yes to any questions about installing required dependencies):
+1. Install the Ruby programming language (version 1.9.2 or greater). Make sure the user running your Perforce server is given access to the Ruby installation.
+2. Install the 3 required Ruby GEMs: builder, rally_api and httpclient by entering the following from a command window (answer yes to any questions about installing required dependencies):
   * Command: gem install rally_api httpclient
 3. If you are using a proxy, add -p http://proxyhost:portnumber to the command line.
 4. Save the RallyConnectorForP4-x-x.zip file locally (on your machine) into the directory where you want to install the connector. Navigate to this install directory and extract the RallyConnectorForP4-x.x.zip file you just saved.
